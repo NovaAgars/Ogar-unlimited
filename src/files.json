@@ -918,6 +918,12 @@
     "name": "AddNode.js"
   },
   {
+    "hash": "ff1a57b06734cdb09a71f00fc80650f8591e9988",
+    "src": "src/packet/DataPacket.js",
+    "dst": "./packet/DataPacket.js",
+    "name": "DataPacket.js"
+  },
+  {
     "hash": "c11b2ff529ab3808be73c7c651d4a5640cb15aa9",
     "src": "src/packet/Chat.js",
     "dst": "./packet/Chat.js",
