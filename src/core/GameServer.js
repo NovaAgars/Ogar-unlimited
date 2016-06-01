@@ -11,7 +11,7 @@ const Entity = require('../entity');
 const Cell = require('../entity/Cell.js');
 const PlayerTracker = require('./PlayerTracker');
 const PacketHandler = require('./PacketHandler');
-const ConfigService = require('./ConfigService.js');
+
 const BotLoader = require('../ai/BotLoader');
 const MinionLoader = require('../ai/MinionLoader');
 
@@ -54,8 +54,7 @@ this.name = name;
 
     // Config
 
-    this.configService = new ConfigService(ismaster);
-    this.configServive.load()
+    this.configService = configService;
     this.config = this.configService.getConfig();
     this.banned = this.configServive.getBanned();
     this.opbyip = this.configService.getOpByIp();
