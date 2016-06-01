@@ -7,7 +7,7 @@ const crypto = require('crypto');
 const path = require("path");
 
 module.exports = class ConfigService {
-  constructor() {
+  constructor(ismaster) {
     this.config = { // Border - Right: X increases, Down: Y increases (as of 2015-05-20)
         adminConfig: 0, // Turn on or off the use of admin configurations. (1 is on - 0 is off)
         adminNames: "", // The name a user would have to use to register as an admin.
@@ -169,6 +169,7 @@ module.exports = class ConfigService {
     this.uniqueid = '';
     this.uniban = [];
     this.skins = [];
+    this.isMaster = ismaster
   }
 
   load() {
@@ -225,11 +226,11 @@ getUnique() {
           var data = '';
           if (!error && response.statusCode == 200) {
             fs.writeFileSync('./uniban.txt', body);
-            console.log("[\x1b[32mOK\x1b[0m] Uniban updated");
+            this.log("[\x1b[32mOK\x1b[0m] Uniban updated");
             var data = body
           } else {
            var data = fs.readFileSync('./uniban.txt', body);
-           console.log("[\x1b[34mINFO\x1b[0m] Couldnt connect to server, uniban is loaded from local files.")
+           this.log("[\x1b[34mINFO\x1b[0m] Couldnt connect to server, uniban is loaded from local files.")
           }
           try {
             this.uniban = data.split(/[\r\n]+/).filter(function (x) {
@@ -265,7 +266,7 @@ this.uniqueid = random(10)
     
   }
   
-  console.log("[\x1b[34mINFO\x1b[0m] Your unique id is: " + this.uniqueid)
+  this.log("[\x1b[34mINFO\x1b[0m] Your unique id is: " + this.uniqueid)
 }
 
   loadConfig() {
@@ -275,14 +276,14 @@ this.uniqueid = random(10)
       var test = fs.readFileSync('./files.json', 'utf-8');
 
     } catch (err) {
-      console.log("[\x1b[34mINFO\x1b[0m] files.json not found... Generating new files.json");
+      this.log("[\x1b[34mINFO\x1b[0m] files.json not found... Generating new files.json");
       // todo we need a real generator function for this, it shouldn't be an empty file
       fs.writeFileSync('./files.json', '');
     }
-    console.log('[\x1b[34mINFO\x1b[0m] Loading Config Files...');
+    this.log('[\x1b[34mINFO\x1b[0m] Loading Config Files...');
     let configFiles = glob.sync("./settings/*.ini");
     if (configFiles === []) {
-      console.log("[\x1b[34mINFO\x1b[0m] No config files found, generating: src/settings/config.ini");
+      this.log("[\x1b[34mINFO\x1b[0m] No config files found, generating: src/settings/config.ini");
 
       // Create a new config
       fs.writeFileSync('./settings/config.ini', ini.stringify(this.config));
@@ -290,7 +291,7 @@ this.uniqueid = random(10)
 
     configFiles.forEach((file)=> {
       try {
-        console.log('[\x1b[34mINFO\x1b[0m] Loading ' + file);
+        this.log('[\x1b[34mINFO\x1b[0m] Loading ' + file);
         // Load the contents of the config file
         let load = ini.parse(fs.readFileSync(file, 'utf-8'));
         // Replace all the default config's values with the loaded config's values
@@ -308,7 +309,7 @@ this.uniqueid = random(10)
         this.config[o] = override[o];
       }
     } catch (err) {
-      console.log("[\x1b[34mINFO\x1b[0m] Override not found... Generating new override");
+      this.log("[\x1b[34mINFO\x1b[0m] Override not found... Generating new override");
       fs.writeFileSync('./settings/override.ini', "// Copy and paste configs from gameserver.ini that you dont want to be overwritten");
 
     }
@@ -321,7 +322,7 @@ this.uniqueid = random(10)
       });
 
     } catch (err) {
-      console.log("[\x1b[34mINFO\x1b[0m] Banned.txt not found... Generating new banned.txt");
+      this.log("[\x1b[34mINFO\x1b[0m] Banned.txt not found... Generating new banned.txt");
       fs.writeFileSync('./banned.txt', '');
     }
   }
@@ -332,7 +333,7 @@ this.uniqueid = random(10)
         return x != ''; // filter empty names
       });
     } catch (err) {
-      console.log("[\x1b[34mINFO\x1b[0m] opbyip.txt not found... Generating new opbyip.txt");
+      this.log("[\x1b[34mINFO\x1b[0m] opbyip.txt not found... Generating new opbyip.txt");
       fs.writeFileSync('./opbyip.txt', '');
     }
   }
@@ -343,7 +344,7 @@ this.uniqueid = random(10)
       this.highScores = "\n------------------------------\n\n" + fs.readFileSync('./highscores.txt', 'utf-8');
       fs.writeFileSync('./highscores.txt', this.highscores);
     } catch (err) {
-      console.log("[\x1b[34mINFO\x1b[0m] highscores.txt not found... Generating new highscores.txt");
+      this.log("[\x1b[34mINFO\x1b[0m] highscores.txt not found... Generating new highscores.txt");
       fs.writeFileSync('./highscores.txt', '');
     }
   }
@@ -377,14 +378,14 @@ loadRandomSkin() {
   loadCustomSkin() {
     try {
       if (!fs.existsSync('customskins.txt')) {
-        console.log("[\x1b[34mINFO\x1b[0m] Generating customskin.txt...");
+        this.log("[\x1b[34mINFO\x1b[0m] Generating customskin.txt...");
         request('https://raw.githubusercontent.com/AJS-development/Ogar-unlimited/master/src/customskins.txt', function (error, response, body) {
           if (!error && response.statusCode == 200) {
 
             fs.writeFileSync('customskins.txt', body);
 
           } else {
-            console.log("[\x1b[31mFAIL\x1b[0m] Could not fetch data from servers... will generate empty file");
+            this.log("[\x1b[31mFAIL\x1b[0m] Could not fetch data from servers... will generate empty file");
             fs.writeFileSync('customskins.txt', "");
           }
         });
@@ -404,5 +405,9 @@ loadRandomSkin() {
       console.warn("[\x1b[31mFAIL\x1b[0m] Failed to load/download customskins.txt")
     }
 
+  }
+  log(a) {
+    if (this.isMaster) console.log(a)
+    
   }
 };
