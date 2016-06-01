@@ -126,7 +126,7 @@ PacketHandler.prototype.handleMessage = function (message) {
           c.borderTop + this.socket.playerTracker.scrambleY,
           c.borderBottom + this.socket.playerTracker.scrambleY
         ));
-        this.socket.sendPacket(new Packet.DataPacket(this.gameServer));
+       if (this.gameServer.isMaster) this.socket.sendPacket(new Packet.DataPacket(this.gameServer));
       }
       break;
        case 90: // from cigar
