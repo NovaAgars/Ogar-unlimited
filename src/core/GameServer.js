@@ -211,6 +211,14 @@ msgAll(msg) {
             }
   
 }
+reloadDataPacket() {
+  for (var i in this.clients) {
+    var client = this.clients[i];
+    if (!client) continue;
+    client.sendPacket(new Packet.DataPacket(this));
+  }
+  
+}
 pm(id, msg) {
   
   var packet = new Packet.Chat("[Console PM]", msg);
