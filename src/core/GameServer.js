@@ -56,7 +56,7 @@ this.name = name;
 
     this.configService = configService;
     this.config = this.configService.getConfig();
-    this.banned = this.configServive.getBanned();
+    this.banned = this.configService.getBanned();
     this.opbyip = this.configService.getOpByIp();
     this.highscores = this.configService.getHighScores();
     this.rSkins = this.configService.getRSkins();
