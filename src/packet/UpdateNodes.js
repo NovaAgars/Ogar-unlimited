@@ -22,7 +22,7 @@ UpdateNodes.prototype.build = function () {
     /////        nodesLength = nodesLength + 20 + (node.getName().length * 2);
     /////
     if (this.gameServer.config.packetversion == 1) {
-    nodesLength = nodesLength + 16 + (node.getName().length * 2) + node.getPremium().length;
+    nodesLength = nodesLength + 17 + (node.getName().length * 2) + node.getPremium().length;
     } else {
       nodesLength = nodesLength + 21 + (node.getName().length * 2) + node.getPremium().length;
     }
@@ -70,7 +70,7 @@ if (this.gameServer.config.packetversion == 1) {
     view.setUint8(offset + 12, node.color.b, true); // Color (B)
     /////view.setUint8(offset + 17, node.spiked, true); // Flags
     /////
-    view.setUint8(offset + 13, node.spiked, true); // Flags
+    view.setUint8(offset + 13, node.spiked); // Flags
     /////
     offset += 14;
 } else {
@@ -87,7 +87,10 @@ if (this.gameServer.config.packetversion == 1) {
     /////
     offset += 18;
         /////
-    var skin = node.getPremium();
+
+    /////
+}
+      var skin = node.getPremium();
     if (skin) {
       for (var j = 0; j < skin.length; j++) {
         var c = skin.charCodeAt(j);
@@ -99,22 +102,6 @@ if (this.gameServer.config.packetversion == 1) {
     }
     view.setUint8(offset, 0); // End of string
     offset++;
-    /////
-}
-    /////
-    //var skin = node.getPremium();
-    //if (skin) {
-      //for (var j = 0; j < skin.length; j++) {
-      //  var c = skin.charCodeAt(j);
-        //if (c) {
-        //  view.setUint8(offset, c);
-      //  }
-      //  offset++;
-  //    }
-    //}
-    //view.setUint8(offset, 0); // End of string
-    //offset++;
-    /////
 
     var name = node.getName();
 
