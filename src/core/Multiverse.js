@@ -82,9 +82,10 @@ module.exports = class Multiverse {
   }
   create(name,ismaster, port, gamemode, desc) {
     if (!this.servers[name] && (-1 == this.ports.indexOf(port) || !port)) {
-    var l = new ControlServer(this.version,undefined, port,ismaster, name, this.configService, this.banned, gamemode);
+    var l = new ControlServer(this.version,this.info, port,ismaster, name, this.configService, this.banned, gamemode);
     l.init();
     l.start();
+     var id = this.getNextId();
     
       var i = {
       name: name,
@@ -92,10 +93,11 @@ module.exports = class Multiverse {
       gamemode: gamemode,
       description: desc,
       isMaster: ismaster,
+      id: id,
     }
     
   if (port) this.ports.push(port);
-    var id = this.getNextId();
+   
     l.id = id;
     this.info[id] = i;
     this.servers[name] = l;
