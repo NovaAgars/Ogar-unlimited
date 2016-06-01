@@ -17,6 +17,7 @@ function PacketHandler(gameServer, socket) {
 module.exports = PacketHandler;
 
 PacketHandler.prototype.handleMessage = function (message) {
+  try {
   function stobuf(buf) {
     var length = buf.length;
     var arrayBuf = new ArrayBuffer(length);
@@ -285,6 +286,9 @@ PacketHandler.prototype.handleMessage = function (message) {
             break;
     default:
       break;
+  }
+  } catch (e) {
+    console.log("[WARN] Stopped crash at packethandler. Probably because of wrong packet/client . Usually normal.");
   }
 };
 
