@@ -112,7 +112,7 @@ var index = this.servers[name].id;
 if (index) {
     this.info.splice(index, 1);
 }
-if (port) {
+if (this.servers[name].port) {
 var index = this.ports.indexOf(this.servers[name].port)
 if (index != -1) {
     this.ports.splice(index, 1);
