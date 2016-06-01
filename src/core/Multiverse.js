@@ -129,7 +129,7 @@ this.servers[name] = undefined;
    return false;
   }
   init() {
-    this.selected = this.create("main", true);  
+    this.selected = this.create("Main", true);  
   }
   start() {
     
