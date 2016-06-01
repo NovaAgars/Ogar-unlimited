@@ -98,6 +98,10 @@ module.exports = class Multiverse {
     l.id = id;
     this.info[id] = i;
     this.servers[name] = l;
+    for (var i in this.servers) {
+var server = servers[i];
+server.gameServer.reloadDataPacket();
+}
     return l;
     } else {
       return false;
@@ -120,6 +124,10 @@ if (index != -1) {
 }
 this.servers[name].stop();
 this.servers[name] = undefined;
+for (var i in this.servers) {
+var server = servers[i];
+server.gameServer.reloadDataPacket();
+}
       return true;
      }
    
