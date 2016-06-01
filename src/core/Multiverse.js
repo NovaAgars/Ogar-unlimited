@@ -1,6 +1,5 @@
 'use strict';
 const ControlServer = require('./ControlServer.js')
-const ConfigService = require('./ConfigService.js');
 const Commands = require('../modules/CommandList');
 module.exports = class Multiverse {
   constructor(version) {
@@ -10,9 +9,7 @@ module.exports = class Multiverse {
     this.whitelist = [];
     this.info = [];
     this.olddata = [];
-    this.configService = new ConfigService()
-    this.configService.load()
-    this.banned = this.configService.getBanned();
+ 
     this.master = [];
     this.ports = [];
     this.commands = Commands.multiverse;
@@ -48,7 +45,7 @@ module.exports = class Multiverse {
       global.gc();
     }
     
-    this.configService.load();
+ 
     for (var i in serv) {
       var old = serv[i]
       if (old.selected) {
@@ -82,7 +79,7 @@ module.exports = class Multiverse {
   }
   create(name,ismaster, port, gamemode, desc) {
     if (!this.servers[name] && (-1 == this.ports.indexOf(port) || !port)) {
-    var l = new ControlServer(this.version,this.info, port,ismaster, name, this.configService, this.banned, gamemode);
+    var l = new ControlServer(this.version,this.info, port,ismaster, name, null ,null, gamemode);
     l.init();
     l.start();
      var id = this.getNextId();
