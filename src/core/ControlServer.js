@@ -7,7 +7,7 @@ const GameServer = require('./GameServer');
 const ConsoleService = require('./ConsoleService.js');
 const Updater = require('./Updater.js');
 //let updater = new Updater(this);
-
+const ConfigService = require('./ConfigService.js');
 'use strict';
 module.exports = class ControlServer {
   constructor(version, multiverse, port, ismaster, name, configService, banned, gamemode) {
@@ -17,7 +17,8 @@ module.exports = class ControlServer {
     this.name = name;
     this.gamemode = gamemode;
 this.port = port;
-this.configService = configService; // we need the config service first so we can setup other services / servers
+this.configService = new ConfigService(ismaster); // we need the config service first so we can setup other services / servers
+this.configService.load()
 this.isMaster = ismaster;
     // share data
 this.config = this.configService.getConfig();
