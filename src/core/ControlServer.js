@@ -10,11 +10,12 @@ const Updater = require('./Updater.js');
 const ConfigService = require('./ConfigService.js');
 'use strict';
 module.exports = class ControlServer {
-  constructor(version, multiverse, port, ismaster, name, configService, banned, gamemode) {
+  constructor(version, multiverse, port, ismaster, name, configService, banned, gamemode, title) {
     // fields
     //this.consoleStreams = {};
     this.servers = [];
     this.name = name;
+    this.title = title;
     this.gamemode = gamemode;
 this.port = port;
 this.configService = new ConfigService(ismaster); // we need the config service first so we can setup other services / servers
