@@ -13,7 +13,7 @@ module.exports = function (multiverse, split) {
     if (servers[i].isMaster) extra = extra + " (Master) ";
     var port = (servers[i].port) ? servers[i].port : "Default";
     var gmd = (servers[i].gamemode) ? servers[i].gamemode : " Default "
-    console.log("[Console] " + a + ". " + servers[i].name + " Port: " + port + " Gmd: " + gmd +  " Title: " + servers[i].title + extra); 
+    console.log("[Console] " + a + ". " + servers[i].name + ": Port: " + port + ", Gmd: " + gmd +  ", Title: " + servers[i].title + extra); 
 
     
   }
