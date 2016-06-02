@@ -144,7 +144,10 @@ server.gameServer.reloadDataPacket();
     
   }
   stop() {
-    for (var i in this.servers) this.servers[i].stop();
+    for (var i in this.servers) {
+      if (!this.servers[i]) continue;
+      this.servers[i].stop();
+    }
     this.servers = [];
     this.selected = [];
     this.info = [];
