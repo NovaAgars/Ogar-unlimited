@@ -78,8 +78,9 @@ module.exports = class Multiverse {
       
     }
   }
-  create(name,ismaster, port, gamemode, title) {
+  create(name,ismaster, port, gamemode, titlea) {
     if (!this.servers[name] && (-1 == this.ports.indexOf(port) || !port)) {
+    var title = (titlea) ? titlea : name
     var l = new ControlServer(this.version,this.info, port,ismaster, name, null ,null, gamemode, title);
     l.init();
     l.start();
@@ -89,7 +90,7 @@ module.exports = class Multiverse {
       name: name,
       port: port,
       gamemode: gamemode,
-      title: (title) ? title : name,
+      title: title,
       isMaster: ismaster,
       id: id,
     }
