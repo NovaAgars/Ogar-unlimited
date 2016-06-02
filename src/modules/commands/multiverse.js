@@ -8,17 +8,19 @@ module.exports = function (multiverse, split) {
   for (var i in servers) {
     if (!servers[i]) continue;
     a++
-    var extra = " ";
-    if (servers[i].name == multiverse.getSelected().name) extra = extra + " (Current selected server) ";
-    if (servers[i].isMaster) extra = extra + " (Main Master server) ";
+    var extra = "  ";
+    if (servers[i].name == multiverse.getSelected().name) extra = extra + " (Selected) ";
+    if (servers[i].isMaster) extra = extra + " (Master) ";
     var port = (servers[i].port) ? servers[i].port : "Default";
-    console.log("[Console] " + a + ". " + servers[i].name + " running on port " + port + extra); 
+    console.log("[Console] " + a + ". " + servers[i].name + " Port: " + port + " Gmd: " + (servers[i].gamemode) ? servers[i].gamemode : " Default " +  " Title: " + servers[i].title + extra); 
 
     
   }
    
  } else if (split[1] == "create") {
    var port = parseInt(split[3]);
+   
+  var title = split.slice(5, split.length).join(' ');
    if (!split[2]) {
      console.log("[Console] Please specify a name");
      return;
@@ -30,8 +32,8 @@ module.exports = function (multiverse, split) {
    var gamemode = "default";
    if (parseInt(split[4])) gamemode = split[4];
    
-   if (!multiverse.create(split[2],false,port, parseInt(split[4]))) console.log("[Console] That name is already taken!"); else 
-   console.log("[Console] Created server " + split[2] + " on port " + port + " on gamemode " + gamemode);
+   if (!multiverse.create(split[2],false,port, parseInt(split[4]),title)) console.log("[Console] That name is already taken!"); else 
+   console.log("[Console] Created server " + split[2] + " on port " + port + " on gamemode " + gamemode + " With a title of " + title);
    
  } else if (split[1] == "remove") {
    if (!split[2]) {
