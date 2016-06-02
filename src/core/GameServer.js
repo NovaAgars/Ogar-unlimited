@@ -475,6 +475,10 @@ startingFood() {
       ws.playerTracker = new PlayerTracker(this, ws);
       ws.packetHandler = new PacketHandler(this, ws);
       ws.on('message', ws.packetHandler.handleMessage.bind(ws.packetHandler));
+      ws.on('error', function err(error) {
+        console.log("[WARN] Caught ws error. Prevented server crash");
+        
+      });
 
       let bindObject = {
         server: this,
