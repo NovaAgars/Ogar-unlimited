@@ -1,6 +1,6 @@
 {
   "name": "Ogar_Unlimited",
-  "version": "16.1.5",
+  "version": "17.0.0",
   "description": "Open source Agar.io server",
   "main": "src/index.js",
   "engines": {
