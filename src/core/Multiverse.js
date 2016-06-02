@@ -36,6 +36,7 @@ module.exports = class Multiverse {
         gamemode: server.gamemode,
         isMaster: server.isMaster,
         selected: s,
+        title: server.title
       };
       serv.push(p);
     }
@@ -49,7 +50,7 @@ module.exports = class Multiverse {
     for (var i in serv) {
       var old = serv[i]
       if (old.selected) {
-       var selected = this.create(old.name,old.isMaster,old.port,old.gamemode);
+       var selected = this.create(old.name,old.isMaster,old.port,old.gamemode, old.title);
         if (selected) {
           
           this.selected = selected;
@@ -58,7 +59,7 @@ module.exports = class Multiverse {
           console.log("[Console] Error in restarting server " + old.name);
         }
       } else {
-        if (this.create(old.name,old.isMaster,old.port,old.gamemode)) {
+        if (this.create(old.name,old.isMaster,old.port,old.gamemode, old.title)) {
         
           console.log("[Console] Restarted " + old.name);
         } else {
@@ -77,9 +78,9 @@ module.exports = class Multiverse {
       
     }
   }
-  create(name,ismaster, port, gamemode, desc) {
+  create(name,ismaster, port, gamemode, title) {
     if (!this.servers[name] && (-1 == this.ports.indexOf(port) || !port)) {
-    var l = new ControlServer(this.version,this.info, port,ismaster, name, null ,null, gamemode);
+    var l = new ControlServer(this.version,this.info, port,ismaster, name, null ,null, gamemode, title);
     l.init();
     l.start();
      var id = this.getNextId();
@@ -88,7 +89,7 @@ module.exports = class Multiverse {
       name: name,
       port: port,
       gamemode: gamemode,
-      description: desc,
+      title: (title) ? title : name,
       isMaster: ismaster,
       id: id,
     }
