@@ -12,7 +12,8 @@ module.exports = function (multiverse, split) {
     if (servers[i].name == multiverse.getSelected().name) extra = extra + " (Selected) ";
     if (servers[i].isMaster) extra = extra + " (Master) ";
     var port = (servers[i].port) ? servers[i].port : "Default";
-    console.log("[Console] " + a + ". " + servers[i].name + " Port: " + port + " Gmd: " + (servers[i].gamemode) ? servers[i].gamemode : " Default " +  " Title: " + servers[i].title + extra); 
+    var gmd = (servers[i].gamemode) ? servers[i].gamemode : " Default "
+    console.log("[Console] " + a + ". " + servers[i].name + " Port: " + port + " Gmd: " + gamemode +  " Title: " + servers[i].title + extra); 
 
     
   }
