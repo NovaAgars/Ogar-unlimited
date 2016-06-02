@@ -9,7 +9,7 @@ DataPacket.prototype.build = function() {
 var result = "";
 for (var i in this.gameServer.multiverse) {
 var info = this.gameServer.multiverse[i];
-var s = info.id + ":" + info.name + ":" + info.port
+var s = info.id + ":" + info.title + ":" + info.port
 result = result + s + "|";
 }
 
